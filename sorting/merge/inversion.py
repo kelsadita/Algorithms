@@ -14,6 +14,8 @@ def merge_sort(a, p, r):
 
 def merge(a, p, q, r):
 
+	global inv_count
+	
 	# creating left and right sub-arrays
 	left = a[p:q+1]
 	right = a[q+1:r+1]
@@ -31,18 +33,27 @@ def merge(a, p, q, r):
 	# comparing and merging routine
 	i = 0
 	j = 0
-
 	for k in range(p, r + 1):
 		if left[i] <= right[j]:
 			a[k] = left[i]
 			i += 1
 		else:
+			# counting the inversions
+			if i < len(left) - 1:
+				inv_count += (len(left) - i - 1)
 			a[k] = right[j]
 			j += 1
 
 
-#a = [22, 11, 23, 21, 1, 2]
-a = [5, 3, 4, 8, 2,1, 4, 8, 9,10, 45,34, 21, 55, 67, 89, 31]
+f = open('IntegerArray.txt', 'r')
+arr = f.read().splitlines()
+arr = [int(a) for a in arr]
+inv_count = 0
 
-merge_sort(a, 0, len(a))
-print a
+# other test case
+#arr = [2, 4, 1, 3, 5]
+#arr = [5, 3, 4, 8, 2,1, 4, 8, 9,10, 45,34, 21, 55, 67, 89, 31]
+
+merge_sort(arr, 0, len(arr))
+
+print inv_count
